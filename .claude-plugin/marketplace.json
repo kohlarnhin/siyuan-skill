@@ -1,0 +1,28 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "siyuan-skill",
+  "owner": {
+    "name": "kohlarnhin"
+  },
+  "metadata": {
+    "description": "Installable SiYuan skill repository centered on SKILL.md, with local runtime and direct HTTP API access."
+  },
+  "plugins": [
+    {
+      "name": "siyuan-skill",
+      "source": "./",
+      "description": "Reusable SiYuan skill with SKILL.md and direct HTTP API runtime.",
+      "version": "1.0.0",
+      "author": {
+        "name": "kohlarnhin"
+      },
+      "category": "productivity",
+      "tags": [
+        "skills",
+        "siyuan",
+        "notes",
+        "http-api"
+      ]
+    }
+  ]
+}

@@ -1,38 +1,41 @@
 # siyuan-skill
 
-一个面向任意 AI / Agent 的 **SiYuan HTTP API 调用指南仓库**。
+一个以 `SKILL.md` 为核心的 **SiYuan HTTP API skill 仓库**。
 
-它不是某个特定平台的插件，也不绑定 Claude Code、MCP、slash command 或某个专用运行时。它的定位很简单：
+它的目标不是把仓库做成“只有某个平台能跑的专用实现”，而是让 AI / Agent 真正拿来就能用：
 
-- 给 AI 一份可直接遵循的操作文档
-- 让 AI 把自然语言需求归一化为结构化请求
-- 再由 AI 安全地请求 SiYuan HTTP API
+- 先读取 `skills/siyuan/SKILL.md`
+- 再把自然语言需求归一化为结构化请求
+- 然后按安全边界直连 SiYuan HTTP API
+- 最后把结果统一汇报给用户
 
 ## 仓库定位
 
 这个仓库适合以下场景：
 
 - 你想让任意 AI 助手操作思源
-- 你需要一份统一的提示词/执行规范
+- 你需要一份带 `SKILL.md` 的可复用 skill 入口
 - 你希望 AI 自动完成参数整理、接口调用、结果汇报
 
-这个仓库**不提供特定客户端插件实现**。
-它提供的是：
+这个仓库的**核心是 skill 本体**，不是某个单一平台的私有实现。
 
-- 输入协议
-- 安全边界
-- action 语义
-- API 映射关系
-- AI 调用步骤
+它主要包含：
+
+- `skills/siyuan/SKILL.md`：主 skill 文档，读它就知道怎么请求 API
+- `skills/siyuan/scripts/invoke.mjs`：本地执行入口
+- `skills/siyuan/lib/`：HTTP client、action router 与 helper
+- `skills/siyuan/config/`：默认配置与示例配置
+- `.claude-plugin/`：面向 Claude Code / 类似插件生态的打包元数据，方便通过 git 安装；不是 skill 本体
+- 本 README：扩展参考手册，用于补充完整协议与安全边界
 
 ## 如何使用
 
-把本 README 当作以下任一种内容使用即可：
+通常优先这样使用：
 
-- AI 的 system prompt
-- AI 的 skill / tool guide
-- Agent 的执行规范文档
-- 你的自定义 AI 工具链中的参考手册
+- 先把 `skills/siyuan/SKILL.md` 当作 skill 主文档
+- 再把本 README 当作扩展参考手册
+- 若你的环境支持 Claude Code 风格插件安装，可直接使用仓库内 `.claude-plugin/`
+- 若你的环境不识别 `.claude-plugin/`，可复用 `SKILL.md`、`scripts/invoke.mjs` 与 `lib/` 中的协议和运行逻辑，但需要自行适配 `$ARGUMENTS`、`${CLAUDE_SKILL_DIR}` 等 Claude 风格运行上下文
 
 核心目标是让 AI 先把用户请求整理成统一结构：
 
@@ -44,16 +47,33 @@
 
 ---
 
+## 仓库结构
+
+- `.claude-plugin/marketplace.json`：供 Claude Code / 类似生态识别仓库插件元数据
+- `.claude-plugin/plugin.json`：插件清单
+- `skills/siyuan/SKILL.md`：skill 主入口
+- `skills/siyuan/scripts/invoke.mjs`：执行脚本
+- `skills/siyuan/lib/*.mjs`：请求与 action 实现
+- `skills/siyuan/config/siyuan.config.example.json`：示例配置
+- `skills/siyuan/config/siyuan.defaults.json`：非敏感默认配置
+- `skills/siyuan/config/siyuan.config.local.json`：本机私有配置文件，需自行创建，且已被 `.gitignore` 忽略
+
 ## 配置约定
 
-为了避免 secret 泄露，建议 AI 运行环境自行提供以下配置：
+为了避免 secret 泄露，建议 AI 运行环境按以下方式提供配置：
 
-- `SIYUAN_BASE_URL` 或 `SIYUAN_API_URL`
-- `SIYUAN_TOKEN`
-- 可选：`SIYUAN_ALLOW_REMOTE`
-- 可选：`SIYUAN_TIMEOUT_MS`
-- 可选：`SIYUAN_DEFAULT_LIMIT`
-- 可选：`SIYUAN_MAX_LIMIT`
+- 优先使用环境变量：
+  - `SIYUAN_BASE_URL` 或 `SIYUAN_API_URL`
+  - `SIYUAN_TOKEN`
+  - 可选：`SIYUAN_ALLOW_REMOTE`
+  - 可选：`SIYUAN_TIMEOUT_MS`
+  - 可选：`SIYUAN_DEFAULT_LIMIT`
+  - 可选：`SIYUAN_MAX_LIMIT`
+- 若使用文件配置：
+  - 复制 `skills/siyuan/config/siyuan.config.example.json`
+  - 保存为 `skills/siyuan/config/siyuan.config.local.json`
+  - 只在这个 local 文件中填写真实 Token / allowRemote
+- `skills/siyuan/config/siyuan.defaults.json` 只用于非敏感默认值，不应写入真实 Token 或远程放行配置
 
 ### 安全要求
 
