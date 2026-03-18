@@ -1,0 +1,28 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "siyuan-skill",
+  "owner": {
+    "name": "kohlarnhin"
+  },
+  "metadata": {
+    "description": "Installable Claude Code plugin that provides a SiYuan direct API skill without depending on an MCP server."
+  },
+  "plugins": [
+    {
+      "name": "siyuan-skill",
+      "source": "./",
+      "description": "Claude Code skill plugin for calling SiYuan HTTP API directly without an MCP server.",
+      "version": "1.0.0",
+      "author": {
+        "name": "kohlarnhin"
+      },
+      "category": "productivity",
+      "tags": [
+        "skills",
+        "siyuan",
+        "notes",
+        "http-api"
+      ]
+    }
+  ]
+}
