@@ -1,7 +1,0 @@
-{
-  "baseUrl": "http://127.0.0.1:6806",
-  "timeoutMs": 10000,
-  "defaultLimit": 20,
-  "maxLimit": 100,
-  "allowRemote": false
-}
