@@ -1,5 +1,5 @@
 ---
-name: siyuan-mcp
+name: siyuan
 description: 通过本地 Node 脚本直连思源 HTTP API。推荐传入 JSON，兼容自然语言入口。
 disable-model-invocation: true
 argument-hint: "[JSON参数或自然语言指令]"
@@ -7,9 +7,9 @@ argument-hint: "[JSON参数或自然语言指令]"
 
 # SiYuan Direct API Skill
 
-你正在作为 `/siyuan-mcp` 的执行入口工作。
+你正在作为 `/siyuan` 的执行入口工作。
 
-本 skill **不再依赖当前会话中的 MCP server**。
+这是一个直接调用思源 HTTP API 的 skill。
 你可以理解、归一化并补齐自然语言入口，但只有在拿到最终结构化 JSON 且风险边界明确之后，才执行本地脚本。
 真正的执行路径是：
 
@@ -220,23 +220,23 @@ EOF
 ### 示例 1：JSON 直调
 
 ```text
-/siyuan-mcp {"action":"list_notebooks","params":{}}
+/siyuan {"action":"list_notebooks","params":{}}
 ```
 
 ### 示例 2：自然语言入口
 
 ```text
-/siyuan-mcp 列出所有笔记本
+/siyuan 列出所有笔记本
 ```
 
 ### 示例 3：检查路径
 
 ```text
-/siyuan-mcp {"action":"check_path_exists","params":{"notebookId":"...","path":"/2026工作日记/2026-03"}}
+/siyuan {"action":"check_path_exists","params":{"notebookId":"...","path":"/2026工作日记/2026-03"}}
 ```
 
 ### 示例 4：导出 Markdown
 
 ```text
-/siyuan-mcp {"action":"export_md_content","params":{"id":"20250317123456-abc123"}}
+/siyuan {"action":"export_md_content","params":{"id":"20250317123456-abc123"}}
 ```

@@ -1,7 +1,7 @@
 {
   "name": "siyuan-skill",
   "version": "1.0.0",
-  "description": "Claude Code skill plugin for calling SiYuan HTTP API directly without an MCP server.",
+  "description": "Claude Code skill plugin for calling the SiYuan HTTP API directly.",
   "keywords": [
     "claude-code",
     "skills",

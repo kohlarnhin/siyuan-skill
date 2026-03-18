@@ -5,13 +5,13 @@
     "name": "kohlarnhin"
   },
   "metadata": {
-    "description": "Installable Claude Code plugin that provides a SiYuan direct API skill without depending on an MCP server."
+    "description": "Installable Claude Code plugin that provides a direct SiYuan API skill."
   },
   "plugins": [
     {
       "name": "siyuan-skill",
       "source": "./",
-      "description": "Claude Code skill plugin for calling SiYuan HTTP API directly without an MCP server.",
+      "description": "Claude Code skill plugin for calling the SiYuan HTTP API directly.",
       "version": "1.0.0",
       "author": {
         "name": "kohlarnhin"
